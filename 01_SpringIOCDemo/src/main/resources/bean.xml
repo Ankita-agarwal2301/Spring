@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="hobby1" class="com.stackroute.spring.ioc.di.Hobby" init-method="setUp" destroy-method="cleanUp">
+		<!-- value for primitive and string -->
+		<constructor-arg>
+			<value>1</value>
+		</constructor-arg>
+		<constructor-arg>
+			<value>Playing cricket</value>
+		</constructor-arg>
+		<constructor-arg>
+			<value>2017</value>
+		</constructor-arg>
+	</bean>
+
+	<bean id="hobby2" class="com.stackroute.spring.ioc.di.Hobby" scope="singleton">
+		<constructor-arg index="0" type="int" value="2">
+		</constructor-arg>
+		<constructor-arg index="1" type="String" value="Playing basketball">
+		</constructor-arg>
+		<constructor-arg index="2" type="int" value="2018">
+		</constructor-arg>
+	</bean>
+
+	<bean id="hobby3" class="com.stackroute.spring.ioc.di.Hobby" scope="prototype">
+		<constructor-arg index="0" type="int" value="3">
+		</constructor-arg>
+		<constructor-arg index="1" type="String" value="Playing chess">
+		</constructor-arg>
+		<constructor-arg index="2" type="int" value="2018">
+		</constructor-arg>
+	</bean>
+
+
+	<bean id="student1" class="com.stackroute.spring.ioc.di.Student">
+		<constructor-arg index="0" type="int" value="11"></constructor-arg>
+		<constructor-arg index="1" type="String" value="Student1"></constructor-arg>
+		<constructor-arg index="2" type="String" value="s@gmail.com"></constructor-arg>
+		<constructor-arg index="3" type="int" value="1234"></constructor-arg>
+		<!-- <constructor-arg index="4" type="com.stackroute.spring.ioc.di.Hobby" 
+			ref="hobby1"></constructor-arg> -->
+		<constructor-arg index="4" type="java.util.List">
+			<list>
+				<ref bean="hobby1" />
+				<ref bean="hobby2" />
+			</list>
+		</constructor-arg>
+	</bean>
+
+
+	<bean id="student2" class="com.stackroute.spring.ioc.di.Student">
+		<constructor-arg index="0" type="int" value="12"></constructor-arg>
+		<constructor-arg index="1" type="String" value="Student2"></constructor-arg>
+		<constructor-arg index="2" type="String" value="s@gmail.com"></constructor-arg>
+		<constructor-arg index="3" type="int" value="33"></constructor-arg>
+		<!-- <constructor-arg index="4" type="com.stackroute.spring.ioc.di.Hobby" 
+			ref="hobby1"></constructor-arg> -->
+		<constructor-arg index="4" type="java.util.List">
+			<list>
+				<ref bean="hobby1" />
+				<ref bean="hobby2" />
+				<ref bean="hobby3" />
+			</list>
+		</constructor-arg>
+	</bean>
+
+	<bean id="studentBo1" class="com.stackroute.spring.ioc.di.StudentBO">
+		<constructor-arg>
+			<map>
+				<entry>
+					<key>
+						<ref bean="student1" />
+					</key>
+					<!-- <value></value> use for primitive and string -->
+					<list><ref bean ="hobby1"/><ref bean ="hobby2"/></list>
+				</entry>
+			</map>
+		</constructor-arg>
+	</bean>
+</beans>
